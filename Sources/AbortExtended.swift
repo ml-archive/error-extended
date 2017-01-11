@@ -49,9 +49,3 @@ public struct AbortExtended: AbortError {
         return metadata
     }
 }
-
-func foo() throws {
-throw AbortExtended.custom(code: 1337)
-throw AbortExtended.custom(status: .badRequest, code: 1337, message: "Sorry, bad request", report: false)
-throw AbortExtended.custom(status: .badGateway, code: Status.badGateway.statusCode, message: Status.badGateway.reasonPhrase, metadata: Node(["key": "value"]), report: false)
-}
