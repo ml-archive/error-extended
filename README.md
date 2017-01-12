@@ -22,11 +22,22 @@ throw AbortExtended.custom(code: 1337)
 ```
 
 ```swift
-throw AbortExtended.custom(status: .badRequest, code: 1337, message: "Sorry, bad request", report: false)
+throw AbortExtended.custom(
+  status: .badRequest, 
+  code: 1337, 
+  message: "Sorry, bad request", 
+  report: false
+)
 ```
 
 ```swift
-throw AbortExtended.custom(status: .badGateway, code: Status.badGateway.statusCode, message: Status.badGateway.reasonPhrase, metadata: Node(["key": "value"]), report: false)
+throw AbortExtended.custom(
+  status: .badGateway, 
+  code: Status.badGateway.statusCode, 
+  message: Status.badGateway.reasonPhrase, 
+  metadata: Node(["key": "value"]), 
+  report: false
+)
 ```
 
 Any middleware (e.g. [bugsnag](https://github.com/nodes-vapor/bugsnag)) that tries to catch errors conforming to `AbortError` will then pick this up.
