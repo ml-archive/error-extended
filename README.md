@@ -12,6 +12,11 @@ Update your `Package.swift` file.
 .Package(url: "https://github.com/nodes-vapor/error-extended.git", majorVersion: 0)
 ```
 
+Don't forget to import the module wherever needed:
+```swift
+import ErrorExtended
+```
+
 ## Getting started 🚀
 If you need more granular control on the content that goes into your errors conforming to the `AbortError`  protocol you can use the `AbortExtended` type instead (which conforms to `AbortError`). This type will give you access to all of the parameters as well as providing you with some convenient extra parameters.
 
