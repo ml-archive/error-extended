@@ -14,7 +14,7 @@ public struct AbortExtended: AbortError {
     ///   - status: The HTTP status code to return. 
     ///     Defaults to `Status.internalServerError`.
     ///   - code: An integer representation of the error. 
-    ///     Defaults to `Status.internalServerError.statusCode`.
+    ///     Defaults to 0.
     ///   - message: Textual representation on the error. 
     ///     Defaults to `Status.internalServerError.reasonPhrase`.
     ///   - metadata: Custom metadata. Defaults to `nil`.
@@ -24,7 +24,7 @@ public struct AbortExtended: AbortError {
     /// - Returns: Customized error (conforming to `AbortError`).
     public static func custom(
         status: Status = .internalServerError,
-        code: Int = Status.internalServerError.statusCode,
+        code: Int = 0,
         message: String = Status.internalServerError.reasonPhrase,
         metadata: Node? = nil,
         report: Bool = true
@@ -43,7 +43,7 @@ public struct AbortExtended: AbortError {
     ///   - metadata: The current metadata.
     ///   - report: Indicates if middleware(s) should report this error.
     /// - Returns: Resolved metadata.
-    private static func resolveMetadata(_ metadata: Node?, report: Bool) -> Node? {
+    private static func resolveMetadata(_ metadata: Node?, report: Bool) -> Node {
         var metadata = metadata ?? Node([:])
         metadata["report"] = Node(report)
         return metadata
