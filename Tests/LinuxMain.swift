@@ -1,6 +1,6 @@
 import XCTest
-@testable import error_extendedTests
+@testable import ErrorExtendedTests
 
 XCTMain([
-     testCase(error_extendedTests.allTests),
+     testCase(AbortExtendedTests.allTests),
 ])

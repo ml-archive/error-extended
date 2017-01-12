@@ -1,5 +1,5 @@
 import XCTest
-@testable import error_extended
+@testable import ErrorExtended
 import Vapor
 import HTTP
 
