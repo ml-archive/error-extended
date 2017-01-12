@@ -1,63 +1,51 @@
 import Vapor
 import HTTP
 
-public enum AbortExtended {
-    case badRequest(metadata: Node)
-    case notFound(metadata: Node)
-    case serverError(metadata: Node)
-    case custom(status: Status, message: String, metadata: Node)
-}
+/// Customized error type.
+public struct AbortExtended: AbortError {
+    public let message: String
+    public let code: Int
+    public let status: Status
+    public let metadata: Node?
 
-extension AbortExtended: AbortError {
-    public var message: String {
-        switch self {
-        case .badRequest:
-            return Abort.badRequest.message
-        case .notFound:
-            return Abort.notFound.message
-        case .serverError:
-            return Abort.serverError.message
-        case .custom(status: _, message: let message, metadata: _):
-            return message
-        }
+    /// Creates a customized error with the given values.
+    ///
+    /// - Parameters:
+    ///   - status: The HTTP status code to return. 
+    ///     Defaults to `Status.internalServerError`.
+    ///   - code: An integer representation of the error. 
+    ///     Defaults to 0.
+    ///   - message: Textual representation on the error. 
+    ///     Defaults to `Status.internalServerError.reasonPhrase`.
+    ///   - metadata: Custom metadata. Defaults to `nil`.
+    ///   - report: Indicates if middleware(s) should report this error. 
+    ///     Defaults to `true`.
+    ///     This will set `metadata["report"]`.
+    /// - Returns: Customized error (conforming to `AbortError`).
+    public static func custom(
+        status: Status = .internalServerError,
+        code: Int = 0,
+        message: String = Status.internalServerError.reasonPhrase,
+        metadata: Node? = nil,
+        report: Bool = true
+    ) -> AbortExtended {
+        return AbortExtended(
+            message: message,
+            code: code,
+            status: status,
+            metadata: AbortExtended.resolveMetadata(metadata, report: report)
+        )
     }
-    
-    public var code: Int {
-        switch self {
-        case .badRequest:
-            return Abort.badRequest.code
-        case .notFound:
-            return Abort.notFound.code
-        case .serverError:
-            return Abort.serverError.code
-        case .custom(status: let status, message: _, metadata: _):
-            return status.statusCode
-        }
-    }
-    
-    public var status: Status {
-        switch self {
-        case .badRequest:
-            return Abort.badRequest.status
-        case .notFound:
-            return Abort.notFound.status
-        case .serverError:
-            return Abort.serverError.status
-        case .custom(status: let status, message: _, metadata: _):
-            return status
-        }
-    }
-    
-    public var metadata: Node? {
-        switch self {
-        case .badRequest(let metadata):
-            return metadata
-        case .notFound(let metadata):
-            return metadata
-        case .serverError(let metadata):
-            return metadata
-        case .custom(status: _, message: _, metadata: let metadata):
-            return metadata
-        }
+
+    /// Helper to resolve metadata.
+    ///
+    /// - Parameters:
+    ///   - metadata: The current metadata.
+    ///   - report: Indicates if middleware(s) should report this error.
+    /// - Returns: Resolved metadata.
+    private static func resolveMetadata(_ metadata: Node?, report: Bool) -> Node {
+        var metadata = metadata ?? Node([:])
+        metadata["report"] = Node(report)
+        return metadata
     }
 }
