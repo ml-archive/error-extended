@@ -3,10 +3,10 @@ import HTTP
 
 /// Customized error type.
 public struct AbortExtended: AbortError {
-    public let message: String
-    public let code: Int
     public let status: Status
+    public let code: Int
     public let metadata: Node?
+    public let reason: String
 
     /// Creates a customized error with the given values.
     ///
@@ -25,15 +25,15 @@ public struct AbortExtended: AbortError {
     public static func custom(
         status: Status = .internalServerError,
         code: Int = 0,
-        message: String = Status.internalServerError.reasonPhrase,
         metadata: Node? = nil,
+        reason: String = Status.internalServerError.reasonPhrase,
         report: Bool = true
     ) -> AbortExtended {
         return AbortExtended(
-            message: message,
-            code: code,
             status: status,
-            metadata: AbortExtended.resolveMetadata(metadata, report: report)
+            code: code,
+            metadata: AbortExtended.resolveMetadata(metadata, report: report),
+            reason: reason
         )
     }
 
