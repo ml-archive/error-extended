@@ -7,7 +7,7 @@
 [![Readme Score](http://readme-score-api.herokuapp.com/score.svg?url=https://github.com/nodes-vapor/error-extended)](http://clayallsopp.github.io/readme-score?url=https://github.com/nodes-vapor/error-extended)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/nodes-vapor/error-extended/master/LICENSE)
 
-Errors with more granularity.
+Vapor errors with more granularity.
 
 
 ## 📦 Installation
