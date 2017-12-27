@@ -58,7 +58,7 @@ Any middleware (e.g. [bugsnag](https://github.com/nodes-vapor/bugsnag)) that tri
 ## 🏆 Credits
 
 This package is developed and maintained by the Vapor team at [Nodes](https://www.nodes.dk).
-The package owner for this project is [Mauran](https://github.com/mauran).
+The package owner for this project is [Rasmus](https://github.com/rasmusebbesen).
 
 ## 📄 License
 
